@@ -1,0 +1,69 @@
+-instantiate turtle
+-instantiate screen
+	-2000x2000 for size
+
+
+-Set starting coordinates of turtle
+-Save starting coordinates (x,y) in a dictionary{}
+	-will be used to calculate the coordinates of the middle of each side of the large triangle
+
+-define function to draw triangle
+	-arguments: size of side, starting coordinates
+		-must end in the starting coordinates input into the function
+		-must end in the starting heading for the turtle
+
+-define function to calculate the middle coordinates of each side of a triangle
+	-arguments: starting coordinates{}, size of side
+		-half_side = size_of_side / 2
+		-left_middle_x = starting_coordinates[x] + (half_side / 2)
+		-left_middle_y = starting_coordinates[y] + half_side
+		
+		-right_middle_x = left_middle_x + half_side
+		-right_middle_y = left_middle_y
+		
+		-bottom_middle_x = starting_coordinates[x] + half_side
+		-bottom_middle_y = starting_coordinates[y]
+		
+		-return [bottom[x,y], right[x,y], middle[x,y]]
+		
+-define function to calculate coordinates of vertices of a triangle
+	arguments: size_of_side, starting_coordinates{}
+		-leftVert_x = starting_coordinates{x}
+		-leftVert_y = starting_coordinates{y}
+		
+		-rightVert_x = starting_coordinates{x} + size_of_side 
+		-rightVert_y = starting_coordinates{y}
+		
+		-topVert_x = starting_coordinates{x} + size_of_side / 2
+		-topVert_y = starting_coordinates{y} + triHeight
+		
+
+-define function to draw fractal component
+	-arguments: starting_coordinates, size_of_side
+		-Draw triangle(size_of_side, starting_coordinates{})
+		-Calculate middle coordinates(starting_coordinates{})
+		-Draw triangle(size_of_side / 2, starting_coordinates{})
+			-Will have sides half the size of the original
+		-Move turtle to left_middle coordinates
+			-Make sure turtle heading is the same as the original
+			-Make sure pen is up
+		-Draw triangle(size_of_side / 2, starting_coordinates{})
+			-Will have sides half the size of the original
+		-Move turtle to bottom_middle coordinates
+			-Make sure turtle heading is the same as the original
+			-Make sure pen is up
+		-Draw triangle(size_of_side / 2, starting_coordinates{})
+			-Will have sides half the size of the original
+		-Move turtle to starting_coordinates{}
+			-Make sure pen is up
+
+			
+draw complete fractal
+	-Calculate coordinates of vertices of first triangle
+	-Draw fractal component
+	-Move turtle position to top vertice of first triangle
+	-Draw fractal component
+	-Move turtle position to right vertice of first triangle
+	-Draw fractal component
+	-starting_coordinates{x} = 
+	
