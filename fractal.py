@@ -1,69 +1,50 @@
 import turtle
-import math
+import turtle_funcs as tf
 
-
+side = 200
 window = turtle.Screen()
+
 startCoord = {'x': 0,
               'y': 0}
+"""
+Instantiate new turtle to pass
+into functions that draw the shape
+"""
 
+newTurtle = turtle.Turtle()
+newTurtle.setposition(startCoord['x'],
+                      startCoord['y'])
+newTurtle.setheading(60)
 
-def draw_tri(sideSize, startCoord):
-    newTurtle = turtle.Turtle()
-    newTurtle.setheading(60)
-    newTurtle.setposition(startCoord['x'], startCoord['y'])
+# Start drawing the full fractal
 
-    for i in range(3):
-        newTurtle.forward(sideSize)
-        newTurtle.right(120)
+"""
+Calculate the vertices of the first larger
+triangle
+"""
 
-    side_mids = find_side_mids(sideSize, startCoord)
+vertTri = tf.find_tri_verts(side, newTurtle)
 
-    newTurtle.setposition(side_mids['left'][0],
-                          side_mids['left'][1])
-    newTurtle.dot()
+tf.draw_frac_comp(side, newTurtle, startCoord)
 
-    newTurtle.setposition(side_mids['right'][0],
-                          side_mids['right'][1])
-    newTurtle.dot()
+newTurtle.pen(pendown=False)
+newTurtle.setposition(vertTri['top']['x'],
+                      vertTri['top']['y'])
+startCoord = {'x': vertTri['top']['x'],
+              'y': vertTri['top']['y']}
+newTurtle.pen(pendown=True)
 
-    newTurtle.setposition(side_mids['bottom'][0],
-                          side_mids['bottom'][1])
-    newTurtle.dot()
+tf.draw_frac_comp(side, newTurtle, startCoord)
 
+newTurtle.pen(pendown=False)
+newTurtle.setposition(vertTri['right']['x'],
+                      vertTri['right']['y'])
+startCoord = {'x': vertTri['right']['x'],
+              'y': vertTri['right']['y']}
+newTurtle.pen(pendown=True)
 
-def find_side_mids(sideSize, startCoord):
+tf.draw_frac_comp(side, newTurtle, startCoord)
 
-    # Function is used to find the middle coordinate
-    # of each side of an equilateral triangle, given the
-    # the length of the triangle's side and starting point
-    # coordinates
-
-    halfSide = sideSize / 2
-    tri_height = sideSize / 2 * math.sqrt(3)
-
-    bottomMiddle_x = startCoord['x'] + halfSide
-    bottomMiddle_y = startCoord['y']
-
-    leftMiddle_x = bottomMiddle_x - halfSide / 2
-    leftMiddle_y = bottomMiddle_y + tri_height / 2
-
-    rightMiddle_x = leftMiddle_x + halfSide
-    rightMiddle_y = leftMiddle_y
-
-    # Return a dict of lists.
-    # Each index of the dict
-    # denotes the side in question.
-    # Index 0 in each sublist is the
-    # X-axis of the coordinate. Index 1
-    # in each sublist is the Y-axis of
-    # the coordinate.
-
-    return {'left': [leftMiddle_x, leftMiddle_y],
-            'right': [rightMiddle_x, rightMiddle_y],
-            'bottom': [bottomMiddle_x, bottomMiddle_y]}
-
-
-draw_tri(600, startCoord)
-
+newTurtle.setposition(0, 0)
 
 window.exitonclick()
